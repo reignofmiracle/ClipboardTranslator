@@ -1,0 +1,14 @@
+# windows
+Thumbs.db
+
+# visual studio
+.vs/
+*.VC.opendb
+*.VC.db
+
+[Oo]bj/
+[Bb]in/
+[Dd]ebug*/
+[Rr]ease*/
+[Pp]ackage*/
+x64/
