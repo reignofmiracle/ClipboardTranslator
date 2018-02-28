@@ -8,7 +8,7 @@ namespace ClipboardTranslator
 {
     [Export]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class ClipboardTranslatorViewModel : BindableBase, IPartImportsSatisfiedNotification
+    public class ClipboardTranslatorViewModel : BindableBase, IPartImportsSatisfiedNotification, IDisposable
     {
         private ClipboardObserver clipboardObserver = new ClipboardObserver();
         private GoogleTranslator googleTranslator = new GoogleTranslator();
@@ -19,6 +19,11 @@ namespace ClipboardTranslator
             this.TranslateTo.Value = "ko";
 
             clipboardObserver.ClipboardText.Subscribe(v => ResultDocument.Text = this.googleTranslator.Translate(v, this.TranslateFrom.Value, this.TranslateTo.Value) ?? "");
+        }
+
+        public void Dispose()
+        {
+            this.clipboardObserver.Dispose();
         }
 
         public ReactiveProperty<string> TranslateFrom { get; } = new ReactiveProperty<string>();

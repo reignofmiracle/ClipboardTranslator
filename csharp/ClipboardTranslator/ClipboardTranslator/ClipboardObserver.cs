@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ClipboardTranslator
 {
-    public class ClipboardObserver
+    public class ClipboardObserver : IDisposable
     {
         private Timer timer;
 
@@ -18,6 +18,12 @@ namespace ClipboardTranslator
             timer.Interval = 100;
             timer.Elapsed += Observe;
             timer.Start();
+        }
+
+        public void Dispose()
+        {
+            this.timer.Stop();
+            this.timer.Elapsed -= Observe;
         }
 
         private void Observe(object sender, ElapsedEventArgs e)

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     xmlns:local="clr-namespace:ClipboardTranslator"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mm="http://metro.mahapps.com/winfx/xaml/controls"
@@ -22,6 +23,7 @@
             <Label
                 Width="70"
                 HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
                 Content="From" />
             <TextBox
                 Width="100"
@@ -30,6 +32,7 @@
             <Label
                 Width="70"
                 HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
                 Content="To" />
             <TextBox
                 Width="100"
@@ -42,16 +45,34 @@
                 Command="{Binding DoSave}"
                 Content="Save" />
         </StackPanel>
-        <ae:TextEditor
-            Grid.Row="1"
-            Margin="0,20,0,0"
-            Background="White"
-            Document="{Binding ResultDocument, Mode=OneWay}"
-            FontFamily="Consolas"
-            FontSize="20pt"
-            Foreground="Black"
-            IsReadOnly="True"
-            ShowLineNumbers="True"
-            WordWrap="True" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <ae:TextEditor
+                Name="ResultTextEditor"
+                Grid.Column="0"
+                Background="White"
+                Document="{Binding ResultDocument, Mode=OneWay}"
+                FontFamily="Consolas"
+                FontSize="20pt"
+                Foreground="Black"
+                IsReadOnly="True"
+                ShowLineNumbers="True"
+                WordWrap="True" />
+
+            <GridSplitter
+                Grid.Column="1"
+                Width="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch"
+                Background="Transparent" />
+
+            <WindowsFormsHost Grid.Column="2">
+                <forms:PropertyGrid x:Name="PropertyGrid" />
+            </WindowsFormsHost>
+        </Grid>
     </Grid>
 </UserControl>
