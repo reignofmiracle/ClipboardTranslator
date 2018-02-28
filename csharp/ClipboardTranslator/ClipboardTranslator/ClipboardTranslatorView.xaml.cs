@@ -10,8 +10,6 @@ namespace ClipboardTranslator
         public ClipboardTranslatorView()
         {
             InitializeComponent();
-
-            this.PropertyGrid.SelectedObject = ResultTextEditor;
         }
     }
 }
