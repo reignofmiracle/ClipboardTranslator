@@ -4,6 +4,7 @@ using System.Diagnostics;
 namespace ClipboardTranslator.Unittest.unittest
 {
     [TestFixture]
+    //[Ignore("wait")]
     public class GoogleTranslatorTest
     {
         [Test]
