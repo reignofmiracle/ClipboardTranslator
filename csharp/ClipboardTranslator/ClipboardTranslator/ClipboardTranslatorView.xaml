@@ -26,7 +26,7 @@
                 Width="100"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                Text="{Binding TranslateFrom.Value}" />
+                Text="{Binding TranslateFrom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Label
                 Width="70"
                 HorizontalContentAlignment="Center"
@@ -36,7 +36,7 @@
                 Width="100"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                Text="{Binding TranslateTo.Value}" />
+                Text="{Binding TranslateTo.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <ae:TextEditor
             Name="ResultTextEditor"

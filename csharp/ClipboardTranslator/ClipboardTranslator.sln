@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardTranslator.WPF", "
 		{921F50A3-6D3D-4F3D-BE26-B91296ACFCA9} = {921F50A3-6D3D-4F3D-BE26-B91296ACFCA9}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardTranslator.Unittest", "ClipboardTranslator.Unittest\ClipboardTranslator.Unittest.csproj", "{7FFF89A2-1C24-49BE-8C5F-0F1FC009C11D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{12D9E912-E8A6-42AF-A46A-935C3FB13E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D9E912-E8A6-42AF-A46A-935C3FB13E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D9E912-E8A6-42AF-A46A-935C3FB13E1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FFF89A2-1C24-49BE-8C5F-0F1FC009C11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FFF89A2-1C24-49BE-8C5F-0F1FC009C11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FFF89A2-1C24-49BE-8C5F-0F1FC009C11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FFF89A2-1C24-49BE-8C5F-0F1FC009C11D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
