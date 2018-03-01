@@ -5,6 +5,7 @@
     xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mm="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:prism="http://prismlibrary.com/"
     d:DesignHeight="600"
     d:DesignWidth="800"
@@ -22,21 +23,37 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 Content="From" />
-            <TextBox
+            <ComboBox
                 Width="100"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Text="{Binding TranslateFrom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                BorderThickness="0"
+                ItemsSource="{Binding LanguageList}"
+                SelectedItem="{Binding SelectedTranslateFrom.Value}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label HorizontalContentAlignment="Center" Content="{Binding Item1}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Label
                 Width="70"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 Content="To" />
-            <TextBox
+            <ComboBox
                 Width="100"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Text="{Binding TranslateTo.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                BorderThickness="0"
+                ItemsSource="{Binding LanguageList}"
+                SelectedItem="{Binding SelectedTranslateTo.Value}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label HorizontalContentAlignment="Center" Content="{Binding Item1}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <ae:TextEditor
             Name="ResultTextEditor"

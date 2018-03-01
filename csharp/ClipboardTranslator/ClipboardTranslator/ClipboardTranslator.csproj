@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="ClipboardTranslatorViewModel.cs" />
     <Compile Include="GoogleTranslator.cs" />
+    <Compile Include="LanguageSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
