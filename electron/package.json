@@ -1,0 +1,73 @@
+{
+  "name": "clipboardtranslator",
+  "version": "1.0.0",
+  "description": "ClipboardTranslator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run build:linux && npm run build:osx && npm run build:win",
+    "build:osx": "build --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "build --linux --ia32",
+    "build:linux64": "build --linux --x64",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "build --win --ia32",
+    "build:win64": "build --win --x64"
+  },  
+  "keywords": [
+    "clipboard",
+    "translate"
+  ],
+  "homepage": "https://github.com/reignofmiracle/ClipboardTranslator",
+  "author": "reignofmiracle",
+  "license": "MIT",
+  "build": {
+    "productName": "ClipboardTranslator",
+    "appId": "com.beycat.ClipboardTranslator",
+    "asar": true,
+    "protocols" : {
+        "name" : "ClipboardTranslator",
+        "schemes" : ["ClipboardTranslator"]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ],
+      "icon": "./resources/ClipboardTranslator.icns"
+    },
+    "dmg": {
+      "title": "ClipboardTranslator",
+      "icon": "./resources/ClipboardTranslator.icns"
+    },
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ],
+      "icon": "./resources/ClipboardTranslator.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "zip",
+        "tar.gz"
+      ],
+      "icon": "./resources"
+    },
+    "nsis":{
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "buildResources": "resources/",
+      "output": "dist/",
+      "app": "."
+    }
+  },
+  "devDependencies": {
+    "electron": "^1.8.2",
+    "electron-builder": "^20.2.0"
+  }
+}

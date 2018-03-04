@@ -1,0 +1,16 @@
+.selection {
+    background: DimGray;
+    color: white;
+}
+select
+{
+    background-color: DimGray;
+    color: white;
+    text-align: center;
+}
+
+.result {
+    font-size: 25px;
+    overflow-y: auto;
+    height:100%;
+}

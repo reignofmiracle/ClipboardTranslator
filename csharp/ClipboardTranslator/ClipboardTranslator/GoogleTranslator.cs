@@ -19,8 +19,8 @@ namespace ClipboardTranslator
                 string url = String.Format("http://www.google.com/translate_t?hl={0}&ie=UTF8&text={1}&langpair={2}", translateFrom, HttpUtility.UrlEncode(text), translateFrom + "|" + translateTo);
                 string html = webClient.DownloadString(url);
                 int from = html.IndexOf("TRANSLATED_TEXT='");
-                int to = html.Substring(from).IndexOf("';var");
-                var sub = html.Substring(from, to + 2);                
+                int to = html.IndexOf("';var", from);
+                var sub = html.Substring(from, to - from + 2);                
                 var raw = this.scriptEngine.Evaluate(sub) as string;
                 this.htmlDocument.LoadHtml(raw);
                 return HttpUtility.HtmlDecode(this.htmlDocument.DocumentNode.InnerText);
