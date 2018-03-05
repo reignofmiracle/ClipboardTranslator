@@ -41,11 +41,11 @@
       "title": "ClipboardTranslator",
       "icon": "./resources/ClipboardTranslator.icns"
     },
-    "win": {      
+    "win": {
       "target": [
         "zip",
         "nsis",
-        "portable"        
+        "portable"
       ],
       "icon": "./resources/ClipboardTranslator.ico"
     },

@@ -7,7 +7,7 @@ let mainWindow
 
 function createWindow() {
     mainWindow = new BrowserWindow({width: 800, height: 600})
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'app/index.html'),
