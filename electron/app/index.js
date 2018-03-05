@@ -1,5 +1,6 @@
 const {clipboard, remote} = require('electron')
 const {Menu, MenuItem} = remote
+const storage = require('electron-json-storage');
 
 languageList = [
     ["Afrikaans","af"],
@@ -124,25 +125,62 @@ languageList.forEach((element, index, array) => {
 translateTo.selectedIndex = languageList.findIndex(elem => elem[1] == 'ko')
 
 let settings = {
-    "newline_sentence" : false,
-    "fontSize" : '50px'
+    'translateFrom': 'en',
+    'translateTo': 'ko',
+    'newline_sentence': false,
+    'fontSize': '30px'
+}
+
+console.log(storage.getDataPath())
+
+function loadSettings() {
+    storage.get('settings', function(error, data) {
+        if (!error) {
+            settings.translateFrom = data.translateFrom
+            settings.translateTo = data.translateTo
+            settings.newline_sentence = data.newline_sentence
+            settings.fontSize = data.fontSize
+            adjustSettings(settings)
+        }
+    });
+}
+
+function saveSettings(settings) {
+    storage.set('settings', settings, function(error) {
+        if (error) console.error(error)
+    })
 }
 
 function adjustSettings(settings) {
-    resultTextArea.style.fontSize = settings.fontSize
+    menu.items[0].submenu.items.find(function(elem) { return elem.label == settings.fontSize }).checked = true
+    resultDiv.style.fontSize = settings.fontSize
+    menu.items[1].checked = settings.newline_sentence
+    resultDiv.innerHTML = newLine(resultDiv.innerHTML, settings.newline_sentence)
+    saveSettings(settings)
 }
 
-adjustSettings(settings)
+loadSettings(settings)
 
-const menu = new Menu()
+let menu = new Menu()
+
+function updateFontSize(menuItem) {
+    settings.fontSize = menuItem.label
+    adjustSettings(settings)
+}
+
 menu.append(new MenuItem({label: 'FontSize', submenu: [
-    new MenuItem({label: '10px', type: 'checkbox', click(menuItem, browserWindow) { }}),
-    new MenuItem({label: '15px', type: 'checkbox', click(menuItem, browserWindow) { }}),
-    new MenuItem({label: '20px', type: 'checkbox', click(menuItem, browserWindow) { }}),
-    new MenuItem({label: '25px', type: 'checkbox', click(menuItem, browserWindow) { }}),
-    new MenuItem({label: '30px', type: 'checkbox', click(menuItem, browserWindow) { }})
+    new MenuItem({label: '20px', type: 'radio', click: updateFontSize}),
+    new MenuItem({label: '30px', type: 'radio', click: updateFontSize}),
+    new MenuItem({label: '40px', type: 'radio', click: updateFontSize}),
+    new MenuItem({label: '50px', type: 'radio', click: updateFontSize}),
+    new MenuItem({label: '60px', type: 'radio', click: updateFontSize}),
+    new MenuItem({label: '70px', type: 'radio', click: updateFontSize})
 ]}))
-menu.append(new MenuItem({label: 'NewLine Sentence', type: 'checkbox', click(menuItem) { settings.newline_sentence = menuItem.checked }}))
+menu.append(new MenuItem({label: 'NewLine Sentence', type: 'checkbox', click(menuItem) 
+{
+    settings.newline_sentence = menuItem.checked
+    adjustSettings(settings)
+}}))
 
 window.addEventListener('contextmenu', (e) => {
     e.preventDefault()
@@ -164,12 +202,24 @@ function translate(text, from, to, func) {
     xhttp.send()    
 }
 
-function parse(r) {    
-    from = r.indexOf("TRANSLATED_TEXT='")
-    to = r.indexOf("';var", from)
-    sub = r.substring(from, to + 2)
+function parse(str) {    
+    from = str.indexOf("TRANSLATED_TEXT='")
+    to = str.indexOf("';var", from)
+    sub = str.substring(from, to + 2)
     eval(sub)
     return TRANSLATED_TEXT
+}
+
+function newLine(str, active) {
+    if (active) {
+        return str.replace(/\.\s+/g,'.|')
+                    .replace(/\?\s/g,'?|')
+                    .replace(/\!\s/g,'!|')
+                    .replace(/\|/gi, "<br>")
+    }
+    else {
+        return str.replace(/\<br\>/gi, " ")
+    }
 }
 
 let latestText = null
@@ -177,7 +227,9 @@ function update() {
     var newText = clipboard.readText('selection')
     if (latestText == newText) return
 
-    translate(newText, translateFrom.value, translateTo.value, (r) => {resultTextArea.innerHTML = parse(r)})
+    translate(newText, translateFrom.value, translateTo.value, (r) => {
+        resultDiv.innerHTML = newLine(parse(r), settings.newline_sentence)
+    })
     latestText = newText
 }
 

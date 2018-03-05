@@ -8,7 +8,7 @@ select
     color: white;
     text-align: center;
 }
-.result {
+.resultDiv {
     font-size: 25px;
     overflow-y: auto;
     height:100%;

@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "electron": "^1.8.2",
-    "electron-builder": "^20.2.0"
+    "electron-builder": "^20.2.0",
+    "electron-json-storage": "^4.0.2"
   }
 }
