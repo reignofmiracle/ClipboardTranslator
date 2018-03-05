@@ -1,5 +1,5 @@
 {
-  "name": "clipboardtranslator",
+  "name": "ClipboardTranslator",
   "version": "1.0.0",
   "description": "ClipboardTranslator",
   "main": "main.js",
@@ -13,7 +13,7 @@
     "build:win": "npm run build:win32 && npm run build:win64",
     "build:win32": "build --win --ia32",
     "build:win64": "build --win --x64"
-  },  
+  },
   "keywords": [
     "clipboard",
     "translate"
@@ -25,9 +25,11 @@
     "productName": "ClipboardTranslator",
     "appId": "com.beycat.ClipboardTranslator",
     "asar": true,
-    "protocols" : {
-        "name" : "ClipboardTranslator",
-        "schemes" : ["ClipboardTranslator"]
+    "protocols": {
+      "name": "ClipboardTranslator",
+      "schemes": [
+        "ClipboardTranslator"
+      ]
     },
     "mac": {
       "target": [
@@ -39,10 +41,11 @@
       "title": "ClipboardTranslator",
       "icon": "./resources/ClipboardTranslator.icns"
     },
-    "win": {
+    "win": {      
       "target": [
         "zip",
-        "nsis"
+        "nsis",
+        "portable"        
       ],
       "icon": "./resources/ClipboardTranslator.ico"
     },
@@ -56,7 +59,7 @@
       ],
       "icon": "./resources"
     },
-    "nsis":{
+    "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },

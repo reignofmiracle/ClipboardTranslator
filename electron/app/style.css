@@ -1,14 +1,13 @@
 .selection {
-    background: DimGray;
+    background: #865fc5;
     color: white;
 }
 select
 {
-    background-color: DimGray;
+    background-color: #865fc5;
     color: white;
     text-align: center;
 }
-
 .result {
     font-size: 25px;
     overflow-y: auto;
