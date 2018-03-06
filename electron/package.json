@@ -1,5 +1,5 @@
 {
-  "name": "ClipboardTranslator",
+  "name": "clipboardtranslator",
   "version": "1.0.0",
   "description": "ClipboardTranslator",
   "main": "main.js",
@@ -66,12 +66,15 @@
     "directories": {
       "buildResources": "resources/",
       "output": "dist/",
-      "app": "."
+      "app": "./"
     }
   },
   "devDependencies": {
-    "electron": "^1.8.2",
-    "electron-builder": "^20.2.0",
+    "electron": "^1.8.3",
+    "electron-builder": "^20.2.1",
+    "electron-json-storage": "^4.0.2"
+  },
+  "dependencies": {
     "electron-json-storage": "^4.0.2"
   }
 }

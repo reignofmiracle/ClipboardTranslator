@@ -114,6 +114,10 @@ languageList.forEach((element, index, array) => {
     option.value = element[1]
     translateFrom.add(option)
 })
+translateFrom.onchange = function() {
+    settings.translateFrom = translateFrom.value
+    adjustSettings(settings)
+}
 translateFrom.selectedIndex = languageList.findIndex(elem => elem[1] == 'en')
 
 languageList.forEach((element, index, array) => {
@@ -122,6 +126,10 @@ languageList.forEach((element, index, array) => {
     option.value = element[1]
     translateTo.add(option)
 })
+translateTo.onchange = function() {
+    settings.translateTo = translateTo.value
+    adjustSettings(settings)
+}
 translateTo.selectedIndex = languageList.findIndex(elem => elem[1] == 'ko')
 
 let settings = {
@@ -131,17 +139,15 @@ let settings = {
     'fontSize': '30px'
 }
 
-console.log(storage.getDataPath())
-
 function loadSettings() {
     storage.get('settings', function(error, data) {
         if (!error) {
-            settings.translateFrom = data.translateFrom
-            settings.translateTo = data.translateTo
-            settings.newline_sentence = data.newline_sentence
-            settings.fontSize = data.fontSize
-            adjustSettings(settings)
-        }
+            if (data.translateFrom) settings.translateFrom = data.translateFrom
+            if (data.translateTo) settings.translateTo = data.translateTo
+            if (data.newline_sentence) settings.newline_sentence = data.newline_sentence
+            if (data.fontSize) settings.fontSize = data.fontSize
+        }        
+        adjustSettings(settings)
     });
 }
 
@@ -156,6 +162,8 @@ function adjustSettings(settings) {
     resultDiv.style.fontSize = settings.fontSize
     menu.items[1].checked = settings.newline_sentence
     resultDiv.innerHTML = newLine(resultDiv.innerHTML, settings.newline_sentence)
+    translateFrom.selectedIndex = languageList.findIndex(elem => elem[1] == settings.translateFrom)
+    translateTo.selectedIndex = languageList.findIndex(elem => elem[1] == settings.translateTo)
     saveSettings(settings)
 }
 
