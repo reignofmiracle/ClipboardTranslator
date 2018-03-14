@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from "electron"
+import { BrowserWindow } from "electron"
 
 class MainWindow {
     constructor() {

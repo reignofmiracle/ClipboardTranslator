@@ -1,12 +1,16 @@
 import { app, console } from "electron"
 import createMainWindow from "./createMainWindow"
-import setAppMenu from "./setAppMenu"
+import createSettingManager from "./createSettingManager"
+import createClipboardTranslator from "./createClipboardTranslator"
 
 let mainWindow
+let settingManager
+let clipboardTranslator
 
 app.on("ready", () => {
-    mainWindow = createMainWindow()    
-    //setAppMenu({ })
+    mainWindow = createMainWindow()
+    settingManager = createSettingManager()
+    clipboardTranslator = createClipboardTranslator()    
 })
 
 app.on("window-all-closed", () => {
@@ -18,5 +22,7 @@ app.on("window-all-closed", () => {
 app.on("activate", (_e, hasVisibleWindows) => {
     if (!hasVisibleWindows) {
         mainWindow = createMainWindow()
+        settingManager = createSettingManager()
+        clipboardTranslator = createClipboardTranslator() 
     }
 })
