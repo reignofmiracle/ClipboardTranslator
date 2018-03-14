@@ -1,4 +1,4 @@
-.selection {
+.languageSelection {
     background: #865fc5;
     color: white;
 }
@@ -7,9 +7,4 @@ select
     background-color: #865fc5;
     color: white;
     text-align: center;
-}
-.resultDiv {
-    font-size: 25px;
-    overflow-y: auto;
-    height:100%;
 }
