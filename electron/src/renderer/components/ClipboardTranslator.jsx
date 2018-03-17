@@ -1,7 +1,9 @@
 import React from "react"
 import style from "./ClipboardTranslator.css"
 import createClipboardTranslator from "./createClipboardTranslator"
-import createSettingManager from "./createSettingManager"
+import createStateManager from "./createStateManager"
+import createContextMenu from "./createContextMenu"
+import { remote } from 'electron'
 import languageList from "./languageList"
 
 export default class ClipboardTranslator extends React.Component {
@@ -12,35 +14,40 @@ export default class ClipboardTranslator extends React.Component {
             translateFrom: "en",
             translateTo: "ko",
             newline_sentence: false,
-            fontSize: '50px'
+            fontSize: '30px'
         }
 
-        this.settingManager = createSettingManager()
-        this.settingManager.loadSettings(v => this.setState(v))
+        this.stateManager = createStateManager()
+        this.stateManager.getState(state => {
+            this.setState(state)
 
-        this.clipboardTranslator = createClipboardTranslator()
-        this.clipboardTranslator.results.subscribe(v => this.setState({ text: v }))
+            this.clipboardTranslator = createClipboardTranslator()
+            this.clipboardTranslator.setState(state)
+            this.clipboardTranslator.results.subscribe(v => this.setState({ text: v }))
+
+            this.menu = createContextMenu(
+                state,
+                v => this.setState(v, this.updateState.bind(this)))
+
+            window.addEventListener('contextmenu', (e) => {
+                e.preventDefault()
+                this.menu.popup(remote.getCurrentWindow())
+            }, false)
+        })
     }
 
     onSelectedLanguageChange(e) {
-        if (e.target.id == "translateFrom") {
-            this.setState(
-                { translateFrom: e.target.value },
-                this.updateState.bind(this)
-            )
-        }
-        if (e.target.id == "translateTo") {
-            this.setState(
-                { translateTo: e.target.value },
-                this.updateState.bind(this)
-            )
+        var state = {}
+        if (e.target.id == "translateFrom") state.translateFrom = e.target.value
+        if (e.target.id == "translateTo") state.translateTo = e.target.value
+        if (state) {
+            this.setState(state, this.updateState.bind(this))
         }
     }
 
     updateState() {
-        this.clipboardTranslator.translateFrom = this.state.translateFrom
-        this.clipboardTranslator.translateTo = this.state.translateTo
-        this.settingManager.saveSettings(this.state)
+        this.clipboardTranslator.setState(this.state)
+        this.stateManager.setState(this.state)
     }
 
     render() {
@@ -61,7 +68,8 @@ export default class ClipboardTranslator extends React.Component {
                     </select>
                 </div>
                 <div id="resultViewer" className={style.resultViewer} >
-                    <span dangerouslySetInnerHTML={{ __html: this.state.text }} fontSize={this.state.fontSize}/>
+                    <span style={{ fontSize: this.state.fontSize }}
+                        dangerouslySetInnerHTML={{ __html: this.state.text }} />
                 </div>
             </div>
         )

@@ -5,8 +5,11 @@ let query = 'http://www.google.com/translate_t?hl={0}&ie=UTF8&text={1}&langpair=
 
 class ClipboardTranslator {
     constructor() {
-        this.translateFrom = "en"
-        this.translateTo = "ko"
+        this.state = {
+            translateFrom: "en",
+            translateTo: "ko",
+            newline_sentence: false
+        }
 
         this.clipboardTexts = new Rx.Subject()
         this.results = new Rx.Subject()
@@ -20,9 +23,13 @@ class ClipboardTranslator {
         })
     }
 
+    setState(state) {
+        this.state = state
+    }
+
     translate(text, props) {
-        var from = props.translateFrom
-        var to = props.translateTo
+        var from = props.state.translateFrom
+        var to = props.state.translateTo
         var url = query.replace('{0}', from).replace('{1}', encodeURI(text)).replace('{2}', from + "|" + to)
         var xhttp = new XMLHttpRequest()
 
@@ -36,7 +43,8 @@ class ClipboardTranslator {
     }
 
     update(text) {
-        this.results.next(this.parse(text))
+        var result = this.formatting(this.parse(text), this.state.newline_sentence)
+        this.results.next(result)
     }
 
     parse(str) {
@@ -46,6 +54,18 @@ class ClipboardTranslator {
         var TRANSLATED_TEXT = ""
         eval(sub)
         return TRANSLATED_TEXT
+    }
+
+    formatting(str, active) {
+        if (active) {
+            return str.replace(/\.\s+/g, '.|')
+                .replace(/\?\s/g, '?|')
+                .replace(/\!\s/g, '!|')
+                .replace(/\|/gi, "<br>")
+        }
+        else {
+            return str.replace(/\<br\>/gi, " ")
+        }
     }
 }
 
