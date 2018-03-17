@@ -8,11 +8,17 @@
     background: #865fc5;
     color: white;
 }
-select
+.languageSelection select
 {
     background-color: #865fc5;
     color: white;
     text-align: center;
+}
+.languageSelection label
+{
+   margin-left: 5px;
+   margin-right: 10px;
+
 }
 .resultViewer {
     width: 100%;

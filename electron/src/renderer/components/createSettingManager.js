@@ -2,14 +2,12 @@ import storage from 'electron-json-storage'
 
 class SettingManager {
     constructor() {
-
     }
 
     loadSettings(update) {
         storage.get('settings', function (error, data) {
             if (!error) {
-
-                settings = {
+                var settings = {
                     'translateFrom': 'en',
                     'translateTo': 'ko',
                     'newline_sentence': false,

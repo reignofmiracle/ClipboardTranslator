@@ -1,4 +1,4 @@
-languageList = [
+let languageList = [
     ["Afrikaans", "af"],
     ["Albanian", "sq"],
     ["Amharic", "am"],
