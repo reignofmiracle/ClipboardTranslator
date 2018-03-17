@@ -1,37 +1,24 @@
 import React from "react"
-import LanguageSelection from "./LanguageSelection"
-import ResultViewer from "./ResultViewer"
 import style from "./ClipboardTranslator.css"
-import { ipcRenderer } from "electron";
+import createClipboardTranslator from "./createClipboardTranslator"
 
 export default class ClipboardTranslator extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { 
-            translateFrom: "en",
-            translateTo: "ko",
-            text: "" 
+        this.state = {
+            text: ""
         }
-    }
 
-    componentDidMount() {
-        ipcRenderer.on("UPDATE_TEXT", (_e, text) => {
-            this.setState({ text });
-        });
-    }
-
-    componentWillUnmount() {
-        ipcRenderer.removeAllListeners();
+        this.clipboardTranslator = createClipboardTranslator()
+        this.clipboardTranslator.results.subscribe(v => this.setState({ text: v }))
     }
 
     render() {
         return (
             <div className={style.clipboardTranslator}>
-                <LanguageSelection
-                    translateFrom={this.state.translateFrom}
-                    translateTo={this.state.translateTo} />
-                <ResultViewer
-                    value={this.state.text} />
+                <div id="resultViewer" className={style.resultViewer} >
+                    <span dangerouslySetInnerHTML={{ __html: this.state.text }} />
+                </div>
             </div>
         )
     }

@@ -1,12 +1,12 @@
-const storage = require('electron-json-storage')
+import storage from 'electron-json-storage'
 
 class SettingManager {
     constructor() {
-        
+
     }
 
-    loadSettings(func) {
-        storage.get('settings', function(error, data) {
+    loadSettings(update) {
+        storage.get('settings', function (error, data) {
             if (!error) {
 
                 settings = {
@@ -21,13 +21,13 @@ class SettingManager {
                 if (data.newline_sentence) settings.newline_sentence = data.newline_sentence
                 if (data.fontSize) settings.fontSize = data.fontSize
 
-                func(settings)                
-            }                    
+                update(settings)
+            }
         })
     }
-    
+
     saveSettings(settings) {
-        storage.set('settings', settings, function(error) {
+        storage.set('settings', settings, function (error) {
             if (error) console.error(error)
         })
     }

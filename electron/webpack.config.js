@@ -28,5 +28,8 @@ module.exports = {
     output: {
         filename: "[name].js"
     },
+    performance: {
+        hints: false
+    },
     devtool: "source-map"
 }

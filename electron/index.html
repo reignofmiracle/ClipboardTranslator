@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>ClipboardTranslator</title>
-        <link rel="stylesheet", href="node_modules/photon/dist/css/photon.css">        
-        <style type="text/css">
-            #app {
-                position: absolute;
-                top: 8px;
-                bottom: 8px;
-                left: 8px;
-                right: 8px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="window">
-            <div id="app" class="window-content"></div>
-        </div>
-        <script>require("./dist/renderer/app.js")</script>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ClipboardTranslator</title>
+    <link rel="stylesheet" , href="node_modules/photon/dist/css/photon.css">
+    <style type="text/css">
+        * {
+            cursor: auto;
+            -webkit-user-select: auto;
+        }
+
+        #app {
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="window">
+        <div id="app" class="window-content"></div>
+    </div>
+    <script>require("./dist/renderer/app.js")</script>
+</body>
+
 </html>
