@@ -15,8 +15,20 @@ export default function createContextMenu(state, setState) {
     menu.append(new remote.MenuItem({
         label: 'NewLine Sentence', type: 'checkbox', click: (v) => setState({ newline_sentence: v.checked })
     }))
+    menu.append(new remote.MenuItem({
+        label: 'Pass Mid', type: 'checkbox', click: (v) => setState({ pass_mid: v.checked })
+    }))
+    menu.append(new remote.MenuItem({ type: 'separator' }))
+    menu.append(new remote.MenuItem({
+        label: 'Credits', type: 'normal', click: (v) => remote.dialog.showMessageBox(null,
+            {
+                title: "Credits",
+                message: "Thanks to https://translate.google.co.kr"
+            })
+    }))
 
     menu.items[0].submenu.items.find(function (elem) { return elem.label == state.fontSize }).checked = true
     menu.items[1].checked = state.newline_sentence
+    menu.items[2].checked = state.pass_mid
     return menu
 }

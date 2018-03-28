@@ -13,6 +13,8 @@ export default class ClipboardTranslator extends React.Component {
             text: "",
             translateFrom: "en",
             translateTo: "ko",
+            pass_mid: false,
+            translateMid: "en",
             newline_sentence: false,
             fontSize: '30px'
         }
@@ -39,6 +41,7 @@ export default class ClipboardTranslator extends React.Component {
     onSelectedLanguageChange(e) {
         var state = {}
         if (e.target.id == "translateFrom") state.translateFrom = e.target.value
+        if (e.target.id == "translateMid") state.translateMid = e.target.value
         if (e.target.id == "translateTo") state.translateTo = e.target.value
         if (state) {
             this.setState(state, this.updateState.bind(this))
@@ -62,6 +65,12 @@ export default class ClipboardTranslator extends React.Component {
                     <select id="translateFrom" onChange={this.onSelectedLanguageChange.bind(this)} value={this.state.translateFrom}>
                         {options}
                     </select>
+                    <div style={{ display: this.state.pass_mid ? "inline" : "none" }}>
+                        <label>Mid</label>
+                        <select id="translateMid" onChange={this.onSelectedLanguageChange.bind(this)} value={this.state.translateMid}>
+                            {options}
+                        </select>
+                    </div>
                     <label>To</label>
                     <select id="translateTo" onChange={this.onSelectedLanguageChange.bind(this)} value={this.state.translateTo}>
                         {options}

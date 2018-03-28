@@ -1,5 +1,6 @@
 import { clipboard } from 'electron'
 import Rx from 'rxjs'
+import { unescape } from'lodash'
 
 let query = 'http://www.google.com/translate_t?hl={0}&ie=UTF8&text={1}&langpair={2}'
 
@@ -8,6 +9,8 @@ class ClipboardTranslator {
         this.state = {
             translateFrom: "en",
             translateTo: "ko",
+            pass_mid: false,
+            translateMid: "en",
             newline_sentence: false
         }
 
@@ -19,7 +22,23 @@ class ClipboardTranslator {
         })
 
         this.clipboardTexts.distinctUntilChanged().subscribe(v => {
-            this.translate(v, this)
+            var translate = this.translate.bind(this)
+            var update = this.update.bind(this)
+            var parse = this.parse.bind(this)
+            var formatting = this.formatting.bind(this)
+
+            var from = this.state.translateFrom
+            var mid = this.state.translateMid
+            var to = this.state.translateTo                
+
+            if (this.state.pass_mid) {
+                this.translate(v, from, mid, function (text) {                    
+                    translate(formatting(parse(text), false), mid, to, update)
+                })
+            }
+            else {
+                this.translate(v, from, to, update)
+            }
         })
     }
 
@@ -27,15 +46,13 @@ class ClipboardTranslator {
         this.state = state
     }
 
-    translate(text, props) {
-        var from = props.state.translateFrom
-        var to = props.state.translateTo
+    translate(text, from, to, func) {
         var url = query.replace('{0}', from).replace('{1}', encodeURI(text)).replace('{2}', from + "|" + to)
         var xhttp = new XMLHttpRequest()
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                props.update(xhttp.responseText)
+                func(xhttp.responseText)
             }
         }
         xhttp.open('GET', url, true)
@@ -53,6 +70,7 @@ class ClipboardTranslator {
         var sub = str.substring(from, to + 2)
         var TRANSLATED_TEXT = ""
         eval(sub)
+        TRANSLATED_TEXT = unescape(TRANSLATED_TEXT)
         return TRANSLATED_TEXT
     }
 
