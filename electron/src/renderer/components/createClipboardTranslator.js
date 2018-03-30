@@ -1,6 +1,6 @@
 import { clipboard } from 'electron'
 import Rx from 'rxjs'
-import { unescape } from'lodash'
+import unescape from 'lodash/unescape'
 
 let query = 'http://www.google.com/translate_t?hl={0}&ie=UTF8&text={1}&langpair={2}'
 

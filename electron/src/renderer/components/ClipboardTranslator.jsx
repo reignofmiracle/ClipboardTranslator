@@ -48,6 +48,14 @@ export default class ClipboardTranslator extends React.Component {
         }
     }
 
+    onClickSwap(e) {
+        var state = {
+            translateFrom: this.state.translateTo,
+            translateTo: this.state.translateFrom,
+        }
+        this.setState(state, this.updateState.bind(this))
+    }
+
     updateState() {
         this.clipboardTranslator.setState(this.state)
         this.stateManager.setState(this.state)
@@ -75,6 +83,7 @@ export default class ClipboardTranslator extends React.Component {
                     <select id="translateTo" onChange={this.onSelectedLanguageChange.bind(this)} value={this.state.translateTo}>
                         {options}
                     </select>
+                    <button onClick={this.onClickSwap.bind(this)}>Swap</button>
                 </div>
                 <div id="resultViewer" className={style.resultViewer} >
                     <span style={{ fontSize: this.state.fontSize }}

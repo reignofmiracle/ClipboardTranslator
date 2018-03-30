@@ -7,6 +7,7 @@
 .languageSelection {
     background: #865fc5;
     color: white;
+    user-select: none;
 }
 .languageSelection select
 {
@@ -17,7 +18,12 @@
 {    
     margin-left: 5px;
     margin-right: 10px;
-
+}
+.languageSelection button
+{    
+    background-color: #865fc5;
+    color: white;
+    border: none;
 }
 .resultViewer {
     width: 100%;
