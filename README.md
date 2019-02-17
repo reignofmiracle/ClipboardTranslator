@@ -2,7 +2,7 @@
 
 Translate Clipboard text with google translate.
 
-+ python
-+ csharp
-+ electron
++ python - successed
++ csharp - failed
++ electron - failed
 
