@@ -2,15 +2,13 @@ import { clipboard } from 'electron'
 import Rx from 'rxjs'
 import unescape from 'lodash/unescape'
 
-let query = 'http://www.google.com/translate_t?hl={0}&ie=UTF8&text={1}&langpair={2}'
+let query = 'https://translate.google.com/#view=home&op=translate&sl={0}&tl={1}&text={2}'
 
 class ClipboardTranslator {
     constructor() {
         this.state = {
             translateFrom: "en",
-            translateTo: "ko",
-            pass_mid: false,
-            translateMid: "en",
+            translateTo: "ko",            
             newline_sentence: false
         }
 
@@ -27,18 +25,10 @@ class ClipboardTranslator {
             var parse = this.parse.bind(this)
             var formatting = this.formatting.bind(this)
 
-            var from = this.state.translateFrom
-            var mid = this.state.translateMid
+            var from = this.state.translateFrom            
             var to = this.state.translateTo                
 
-            if (this.state.pass_mid) {
-                this.translate(v, from, mid, function (text) {                    
-                    translate(formatting(parse(text), false), mid, to, update)
-                })
-            }
-            else {
-                this.translate(v, from, to, update)
-            }
+            this.translate(v, from, to, update)
         })
     }
 
@@ -47,7 +37,7 @@ class ClipboardTranslator {
     }
 
     translate(text, from, to, func) {
-        var url = query.replace('{0}', from).replace('{1}', encodeURI(text)).replace('{2}', from + "|" + to)
+        var url = query.replace('{0}', from).replace('{1}', to).replace('{2}', encodeURI(text))        
         var xhttp = new XMLHttpRequest()
 
         xhttp.onreadystatechange = function () {
@@ -64,13 +54,10 @@ class ClipboardTranslator {
         this.results.next(result)
     }
 
-    parse(str) {
-        var from = str.indexOf("TRANSLATED_TEXT='")
-        var to = str.indexOf("';var", from)
-        var sub = str.substring(from, to + 2)
-        var TRANSLATED_TEXT = ""
-        eval(sub)
-        TRANSLATED_TEXT = unescape(TRANSLATED_TEXT)
+    parse(str) { 
+        console.log(str)               
+        ret = eval(str)
+        TRANSLATED_TEXT = ret.message
         return TRANSLATED_TEXT
     }
 
