@@ -6,3 +6,5 @@ Translate Clipboard text with google translate.
 + csharp - failed
 + electron - failed
 
++ electron2 - successed
+
