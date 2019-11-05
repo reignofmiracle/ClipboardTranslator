@@ -21,6 +21,8 @@ function createWindow() {
             nodeIntegration: true,
         }
     })
+
+    win.setAlwaysOnTop(true, "floating", 1)
     
     win.webContents.once("dom-ready", () => {  
         win.webContents.executeJavaScript(`

@@ -67,7 +67,8 @@
   "dependencies": {
     "rxjs": "^6.5.3"
   },
-  "devDependencies": {
+
+  "devDependencies": {    
     "electron": "^7.0.0",
     "electron-builder": "^21.2.0"
   }
