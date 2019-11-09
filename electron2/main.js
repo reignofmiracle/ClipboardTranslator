@@ -22,7 +22,7 @@ function createWindow() {
         }
     })
 
-    win.setAlwaysOnTop(true, "floating", 1)
+    win.setAlwaysOnTop(true, "floating")
     
     win.webContents.once("dom-ready", () => {  
         win.webContents.executeJavaScript(`
