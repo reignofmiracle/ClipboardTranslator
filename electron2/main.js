@@ -1,7 +1,8 @@
 const {
     app,
+    BrowserWindow,    
     clipboard,
-    BrowserWindow
+    Menu    
 } = require('electron')
 
 const {
@@ -16,13 +17,11 @@ const {
 function createWindow() {
     let win = new BrowserWindow({
         width: 800,
-        height: 600,        
+        height: 600,                
         webPreferences: {
             nodeIntegration: true,
         }
-    })
-
-    win.setAlwaysOnTop(true, "floating")
+    })    
     
     win.webContents.once("dom-ready", () => {  
         win.webContents.executeJavaScript(`
@@ -39,6 +38,28 @@ function createWindow() {
     getClipboardObservable().subscribe(v => {        
         win.webContents.send('source', v)        
     })
+
+    let menu = Menu.buildFromTemplate([
+        {
+            label: 'Option',
+            submenu: [
+                {
+                    label: 'Floating',
+                    type: 'checkbox',
+                    checked: false,
+                    click: function(item) {
+                        if (item.checked) {
+                            win.setAlwaysOnTop(true, "floating")
+                        } else {
+                            win.setAlwaysOnTop(false)
+                        }
+                    },
+                },
+            ]
+        },
+    ])    
+
+    Menu.setApplicationMenu(menu)
 }
 
 function getClipboardObservable() {
