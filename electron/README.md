@@ -1,10 +1,10 @@
-# ClipboardTranslator - Electron
+# ClipboardTranslator - Electron2
 
-npm install electron --save-dev
-npm install electron-builder
-npm install electron-json-storage --save
+Translate Clipboard text with google translate web page.
 
-npm start // for debug
+1. install yarn
 
-npm run build:xxx
+2. \>> yarn install
+
+3. \>> yarn dist
 

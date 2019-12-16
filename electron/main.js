@@ -65,7 +65,7 @@ function createWindow() {
 function getClipboardObservable() {
     var subject = new Subject()
     interval(200).subscribe(v => {
-        subject.next(clipboard.readText('selection'))
+        subject.next(clipboard.readText())
     })
     return subject.pipe(distinctUntilChanged())
 }

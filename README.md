@@ -1,10 +1,9 @@
 # ClipboardTranslator
 
-Translate Clipboard text with google translate.
+Translate clipboard text with google translate.
 
-+ python - successed
++ python - succeeded
 + csharp - failed
-+ electron - failed
++ electron - succeeded
 
-+ electron2 - successed
 
