@@ -14,6 +14,8 @@ const {
     distinctUntilChanged
 } = require('rxjs/operators')
 
+var isWatch = true
+
 function createWindow() {
     let win = new BrowserWindow({
         width: 800,
@@ -41,8 +43,16 @@ function createWindow() {
 
     let menu = Menu.buildFromTemplate([
         {
-            label: 'Option',
-            submenu: [
+            label: 'Settings',
+            submenu:[
+                {
+                    label: 'Watch',
+                    type: 'checkbox',
+                    checked: true,
+                    click: function(item) {
+                        isWatch = item.checked
+                    },
+                },
                 {
                     label: 'Floating',
                     type: 'checkbox',
@@ -54,9 +64,9 @@ function createWindow() {
                             win.setAlwaysOnTop(false)
                         }
                     },
-                },
+                }
             ]
-        },
+        }        
     ])    
 
     Menu.setApplicationMenu(menu)
@@ -65,7 +75,9 @@ function createWindow() {
 function getClipboardObservable() {
     var subject = new Subject()
     interval(200).subscribe(v => {
-        subject.next(clipboard.readText())
+        if (isWatch) {
+            subject.next(clipboard.readText())    
+        }
     })
     return subject.pipe(distinctUntilChanged())
 }
