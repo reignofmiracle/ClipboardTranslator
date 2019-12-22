@@ -54,7 +54,7 @@ function createWindow() {
                     },
                 },
                 {
-                    label: 'Floating',
+                    label: 'Float',
                     type: 'checkbox',
                     checked: false,
                     click: function(item) {
