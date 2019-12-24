@@ -1,6 +1,6 @@
 # ClipboardTranslator - Electron2
 
-Translate Clipboard text with google translate web page.
+## Translate Clipboard text with google translate web page.
 
 1. install yarn
 
@@ -8,3 +8,7 @@ Translate Clipboard text with google translate web page.
 
 3. \>> yarn dist
 
+## Usage
+
+Ctrl + W : Watch
+Ctrl + F : Float

@@ -1,7 +1,7 @@
 {
   "name": "clipboardtranslator",
   "productName": "ClipboardTranslator",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "simple clipboard translator",
   "main": "main.js",
   "scripts": {
@@ -67,8 +67,7 @@
   "dependencies": {
     "rxjs": "^6.5.3"
   },
-
-  "devDependencies": {    
+  "devDependencies": {
     "electron": "^7.0.0",
     "electron-builder": "^21.2.0"
   }

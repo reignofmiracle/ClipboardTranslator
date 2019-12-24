@@ -48,14 +48,16 @@ function createWindow() {
                 {
                     label: 'Watch',
                     type: 'checkbox',
+                    accelerator: 'CmdOrCtrl+W',
                     checked: true,
                     click: function(item) {
                         isWatch = item.checked
                     },
                 },
                 {
-                    label: 'Float',
+                    label: 'Float',                    
                     type: 'checkbox',
+                    accelerator: 'CmdOrCtrl+F',
                     checked: false,
                     click: function(item) {
                         if (item.checked) {
