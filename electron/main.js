@@ -1,87 +1,87 @@
 const {
     app,
-    BrowserWindow,    
+    BrowserWindow,
     clipboard,
-    Menu    
-} = require('electron')
+    Menu
+} = require('electron');
 
 const {
     interval,
     Subject
-} = require('rxjs')
+} = require('rxjs');
 
 const {
     distinctUntilChanged
-} = require('rxjs/operators')
+} = require('rxjs/operators');
 
-var isWatch = true
+var isWatch = true;
 
 function createWindow() {
     let win = new BrowserWindow({
         width: 800,
-        height: 600,                
+        height: 600,
         webPreferences: {
             nodeIntegration: true,
         }
-    })    
-    
-    win.webContents.once("dom-ready", () => {  
-        win.webContents.executeJavaScript(`
-            const { ipcRenderer } = require('electron')
-            ipcRenderer.on('source', (event, arg) => {                  
-                var source = document.getElementById('source')          
-                source.value = arg
-            })
-        `)        
-    })
+    });
 
-    win.loadURL('https://translate.google.com')
-    
-    getClipboardObservable().subscribe(v => {        
-        win.webContents.send('source', v)        
-    })
+    win.loadURL('https://translate.google.com');
+
+    getClipboardObservable().subscribe(v => {
+        win.webContents.executeJavaScript(`
+            var source = document.getElementsByTagName('textarea')[0];
+            source.focus();
+            source.value = '';
+        `)
+        .then(v => {
+            win.webContents.paste();
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    });
 
     let menu = Menu.buildFromTemplate([
         {
             label: 'Settings',
-            submenu:[
+            submenu: [
                 {
                     label: 'Watch',
                     type: 'checkbox',
                     accelerator: 'CmdOrCtrl+W',
                     checked: true,
-                    click: function(item) {
-                        isWatch = item.checked
+                    click: function (item) {
+                        isWatch = item.checked;
                     },
                 },
                 {
-                    label: 'Float',                    
+                    label: 'Float',
                     type: 'checkbox',
                     accelerator: 'CmdOrCtrl+F',
                     checked: false,
-                    click: function(item) {
+                    click: function (item) {
                         if (item.checked) {
-                            win.setAlwaysOnTop(true, "floating")
+                            win.setAlwaysOnTop(true, "floating");
                         } else {
-                            win.setAlwaysOnTop(false)
+                            win.setAlwaysOnTop(false);
                         }
                     },
                 }
             ]
-        }        
-    ])    
+        }
+    ]);
 
-    Menu.setApplicationMenu(menu)
+    Menu.setApplicationMenu(menu);
 }
 
 function getClipboardObservable() {
-    var subject = new Subject()
+    var subject = new Subject();
     interval(200).subscribe(v => {
         if (isWatch) {
-            subject.next(clipboard.readText())    
+            subject.next(clipboard.readText());
         }
-    })
-    return subject.pipe(distinctUntilChanged())
+    });
+    return subject.pipe(distinctUntilChanged());
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
